@@ -99,9 +99,16 @@ public class FragmentData
     /// <param name="mesh">The source mesh data.</param>
     public FragmentData(Mesh mesh)
     {
+        //I have the best wife on the whole planet most of the time 
         var positions = mesh.vertices;
         var normals = mesh.normals;
         var uv = mesh.uv;
+        if(uv.Length == 0){
+            //try channel 1
+            uv = mesh.uv2;
+        }
+        //var uv1 = mesh
+        
 
         this.Vertices = new List<MeshVertex>(mesh.vertexCount);
         this.CutVertices = new List<MeshVertex>(mesh.vertexCount / 10);
@@ -109,6 +116,9 @@ public class FragmentData
         this.IndexMap = new int[positions.Length];
 
         // Add mesh vertices
+        Debug.Log("mesh.vertices length=" + positions.Length);
+        Debug.Log("mesh.normals length=" + normals.Length);
+        Debug.Log("mesh.uv length=" + uv.Length);
         for (int i = 0; i < positions.Length; i++)
         {
             this.Vertices.Add(new MeshVertex(positions[i], normals[i], uv[i]));
